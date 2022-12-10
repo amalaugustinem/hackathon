@@ -1,14 +1,17 @@
 import React from 'react';
 import { useState } from 'react';
-import {Auth} from '../../js/firebase'
-import {createUserWithEmailAndPassword} from 'firebase/auth'
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
+
 
 const Register=()=>{
 	const [email,setEmail] = useState("");
 	const [password,setPassword] = useState("");
 	const [repassword,setRepassword] = useState("");
 	const [error,setError] = useState("");
-	
+  const { currentUser, register } = useAuth();
+	let navigate = useNavigate();
+
 	//validate password
 	const validatePassword =(e)=>{
 	let isValid = true
@@ -21,14 +24,15 @@ const Register=()=>{
   return isValid
 }
 	//register account
-	const register = e => {
+	const registers = e => {
   e.preventDefault()
   setError('')
   if(validatePassword()) {
     // Create a new user with email and password using firebase
-      createUserWithEmailAndPassword(Auth, email, password)
+    register(email, password)
       .then((res) => {
-          console.log(res.user)
+          console.log(res.user);
+          navigate('/Login');
         })
       .catch(err => setError(err.message))
   }
@@ -46,7 +50,6 @@ const Register=()=>{
           type="email" 
           placeholder="firstname@example.com"
 			minLength="8"
-			value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
@@ -67,7 +70,7 @@ const Register=()=>{
           onChange={(e) => setRepassword(e.target.value)}
         />
       </label>
-		<input type="submit" value="submit" onClick={register} />
+		<input type="submit" value="Register" onClick={registers} />
     </form>
 		<h1>{error}</h1>
 	</>
