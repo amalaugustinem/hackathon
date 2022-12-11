@@ -15,7 +15,7 @@ const Dashboard = ()=>{
     })
     return(
         <>
-        <div onClick={logout}>Logout</div>
+        <button onClick={logout}>Logout</button>
         <Map />
         </>
     );

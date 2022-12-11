@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+import "./dist/login.css"
 
 const LoginForm=()=>{
     const [email,setEmail] = useState("");
@@ -24,7 +25,7 @@ const LoginForm=()=>{
     }
     return(
         <>
-        <form>
+        <form className='Form'>
       <label>Enter your Email:
         <input
 			required

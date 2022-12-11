@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+import "./dist/login.css"
 
 
 const Register=()=>{
@@ -43,7 +44,7 @@ const Register=()=>{
 	
 	return(
 		<>
-		<form>
+		<form className='Form'>
       <label>Enter your Email:
         <input
 			required

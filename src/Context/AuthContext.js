@@ -3,10 +3,11 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-
+import { useNavigate } from "react-router-dom";
 import {Auth as auth} from "../js/firebase";
 
 const AuthContext = createContext();
+
 
 export function useAuth() {
   return useContext(AuthContext);
@@ -15,16 +16,9 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-  const [markarray,setMarkarray] = useState([{lat:9.85130, lon:76.9400,key:"1"},{lat:9.85190, lon:76.9400,key:"2"}])
-  function updateMakerArray(arr){
-    setMarkarray(oldArray => [...oldArray, arr]);
-    console.log(markarray)
-  }
+
   function register(email, password) {
     return createUserWithEmailAndPassword(auth, email, password);
-  }
-  function updatedMakerarr(){
-    return markarray;
   }
 
   function login(email, password) {
@@ -32,6 +26,7 @@ export function AuthProvider({ children }) {
   }
   function logout(){
     auth.signOut();
+
   }
 
   useEffect(() => {
@@ -42,14 +37,15 @@ export function AuthProvider({ children }) {
 
     return unsubscribe;
   }, []);
-
+  const [markarray,setMarkarray] = useState([{lat:9.85130, lon:76.9400,key:"1"},{lat:9.85190, lon:76.9400,key:"2"}])
   const value = {
     currentUser,
     login,
+    logout,
     register,
     markarray,
-    updateMakerArray,
-    updatedMakerarr,
+    setMarkarray,
+
   };
 
   return (
